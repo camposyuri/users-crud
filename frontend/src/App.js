@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import Users from "./pages/Users";
 
+import "./App.css";
+
 const App = () => {
   return (
     <>
