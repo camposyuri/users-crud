@@ -1,43 +1,46 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
 
-import "./styles.css";
+import {
+  Collapse,
+  Nav,
+  Navbar,
+  NavLink,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem,
+} from "reactstrap";
 
 const Header = () => {
-  const [click, setClick] = useState(false);
+  const [open, setOPen] = useState(false);
 
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+  const toggle = () => {
+    setOPen(!open);
+  };
 
   return (
-    <div className="navbar">
-      <div className="navbar-container container">
-        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+    <>
+      <Navbar color="dark" dark expand="md">
+        <NavbarBrand tag={Link} to="/">
           CRUD
-        </Link>
-        <div className="menu-icon" onClick={handleClick}>
-          {click ? <FaTimes /> : <FaBars />}
-        </div>
-        <ul className={click ? "nav-menu active" : "nav-menu"}>
-          <li className="nav-item">
-            <Link to="/users" className="nav-links" onClick={closeMobileMenu}>
-              Users
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              to="/projects"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
-              Projects
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </div>
+        </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={open} navbar>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink tag={Link} to="/users">
+                Users
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/projects">
+                Projects
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </>
   );
 };
 
