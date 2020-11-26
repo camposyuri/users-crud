@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../../services/api";
 
 const Users = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    api.get("/users").then((response) => {
+      setData(response.data);
+    });
+  }, []);
+
   return (
     <>
-      <h1>Users</h1>
+      {data.map((item) => {
+        return (
+          <h1>
+            {item.id} - {item.username}
+          </h1>
+        );
+      })}
     </>
   );
 };
