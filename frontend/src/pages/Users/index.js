@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
 import TableList from "../../components/Table";
 import TableBody from "../../components/Table/TableBody";
 import TableHeader from "../../components/Table/TableHeader";
@@ -8,11 +9,19 @@ import api from "../../services/api";
 const Users = () => {
   const [data, setData] = useState([]);
 
+  // GET: Listing my users
   useEffect(() => {
     api.get("/users").then((response) => {
       setData(response.data);
     });
   }, []);
+
+  const handleDelete = (id) => {
+    api.delete("/users/" + id).then((response) => {
+      const filters = data.filter((item) => item.id !== id);
+      setData(filters);
+    });
+  };
 
   return (
     <>
@@ -40,6 +49,9 @@ const Users = () => {
               <Link className="btn btn-warning" to={"/edit/" + item.id}>
                 Edit
               </Link>
+              <Button className="ml-2" onClick={() => handleDelete(item.id)}>
+                Delete
+              </Button>
             </TableBody>
           );
         })}
