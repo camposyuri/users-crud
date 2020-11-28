@@ -49,7 +49,11 @@ const Users = () => {
               <Link className="btn btn-warning" to={"/edit/" + item.id}>
                 Edit
               </Link>
-              <Button className="ml-2" onClick={() => handleDelete(item.id)}>
+              <Button
+                className="ml-2"
+                color="danger"
+                onClick={() => handleDelete(item.id)}
+              >
                 Delete
               </Button>
             </TableBody>
