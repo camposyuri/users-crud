@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
+import { Alert, Button, Container } from "reactstrap";
 import TableList from "../../components/Table";
 import TableBody from "../../components/Table/TableBody";
 import TableHeader from "../../components/Table/TableHeader";
@@ -22,6 +22,20 @@ const Users = () => {
       setData(filters);
     });
   };
+
+  if (data.length === 0) {
+    return (
+      <Container>
+        <h1 className="my-5">Listing of users</h1>
+        <Link className="btn btn-primary" to="/newUsers">
+          New User
+        </Link>
+        <Alert className="my-4" color="warning">
+          You have no registered users
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     <>
