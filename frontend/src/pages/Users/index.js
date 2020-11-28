@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Alert, Button, Container } from "reactstrap";
+import { Alert, Button, Container, Row, Spinner } from "reactstrap";
 import TableList from "../../components/Table";
 import TableBody from "../../components/Table/TableBody";
 import TableHeader from "../../components/Table/TableHeader";
@@ -8,13 +8,31 @@ import api from "../../services/api";
 
 const Users = () => {
   const [data, setData] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // GET: Listing my users
   useEffect(() => {
-    api.get("/users").then((response) => {
-      setData(response.data);
-    });
+    setTimeout(() => {
+      api.get("/users").then((response) => {
+        setData(response.data);
+      });
+      setIsLoaded(true);
+    }, 500);
   }, []);
+
+  if (!isLoaded) {
+    return (
+      <Container className="my-5">
+        <Row
+          className="align-items-center justify-content-center"
+          style={{ height: "70vh" }}
+        >
+          <Spinner color="dark" style={{ width: "3rem", height: "3rem" }} />
+        </Row>
+        {console.log("AQUI")}
+      </Container>
+    );
+  }
 
   const handleDelete = (id) => {
     api.delete("/users/" + id).then((response) => {
