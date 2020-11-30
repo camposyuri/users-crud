@@ -7,6 +7,7 @@ import Users from "./pages/Users";
 
 import "./App.css";
 import EditUser from "./pages/EditUser";
+import NewUsers from "./pages/NewUsers";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/users" component={Users} />
+          <Route path="/new-users" component={NewUsers} />
           <Route path="/edit/:id" component={EditUser} />
           <Route path="/projects" component={Projects} />
         </Switch>

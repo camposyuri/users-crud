@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { BsBoxArrowInLeft } from "react-icons/bs";
 import { Link, Redirect } from "react-router-dom";
 import {
+  Button,
+  Col,
   Container,
   Form,
-  Button,
   FormGroup,
   Input,
   Label,
   Row,
-  Col,
 } from "reactstrap";
 import api from "../../services/api";
-import { BsBoxArrowInLeft } from "react-icons/bs";
 
-const EditUser = ({ match }) => {
+const NewUsers = () => {
   const [form, setForm] = useState({
     name: "",
     username: "",
@@ -23,22 +23,16 @@ const EditUser = ({ match }) => {
 
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    api.get("/users/" + match.params.id).then((response) => {
-      setForm(response.data[0]);
-    });
-  }, [match.params.id]);
-
-  const handleValue = (field) => ({ target }) => {
+  const handleValue = (field) => (event) => {
     setForm({
       ...form,
-      [field]: target.value,
+      [field]: event.target.value,
     });
   };
 
   const save = () => {
     api
-      .put("/users/" + match.params.id, {
+      .post("/users", {
         ...form,
       })
       .then((_) => {
@@ -54,65 +48,62 @@ const EditUser = ({ match }) => {
     <>
       <Container>
         <Col md="6">
-          <Row className="my-2">
+          <Row className="mt-3">
             <Link to="/users" className="d-flex align-items-center">
               <BsBoxArrowInLeft className="text-secondary" size="30" />
             </Link>
-            <h1>Edit Users</h1>
+            <h1>New user</h1>
           </Row>
         </Col>
+
         <Form>
           <FormGroup>
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Name:</Label>
             <Input
               id="name"
-              type="text"
               name="name"
+              type="text"
               value={form.name}
               onChange={handleValue("name")}
             />
           </FormGroup>
 
           <FormGroup>
-            <Label htmlFor="name">Username</Label>
+            <Label htmlFor="username">Username:</Label>
             <Input
-              id="name"
+              id="username"
               type="text"
-              name="name"
               value={form.username}
               onChange={handleValue("username")}
             />
           </FormGroup>
 
           <FormGroup>
-            <Label htmlFor="name">E-mail</Label>
+            <Label htmlFor="email">E-mail:</Label>
             <Input
               id="email"
-              type="text"
               name="email"
+              type="email"
               value={form.email}
               onChange={handleValue("email")}
             />
           </FormGroup>
 
           <FormGroup>
-            <Label htmlFor="name">Phone</Label>
+            <Label htmlFor="number">Phone:</Label>
             <Input
               id="number"
-              type="text"
               name="number"
+              type="text"
               value={form.number}
               onChange={handleValue("number")}
             />
           </FormGroup>
-
-          <Button color="primary" onClick={save}>
-            Save
-          </Button>
+          <Button onClick={save}>Save</Button>
         </Form>
       </Container>
     </>
   );
 };
 
-export default EditUser;
+export default NewUsers;
