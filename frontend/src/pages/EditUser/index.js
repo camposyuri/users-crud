@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
+import { Link, Redirect } from "react-router-dom";
+import {
+  Container,
+  Form,
+  Button,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+  Col,
+} from "reactstrap";
 import api from "../../services/api";
+import { BsBoxArrowInLeft } from "react-icons/bs";
 
 const EditUser = ({ match }) => {
   const [form, setForm] = useState({
@@ -43,7 +53,14 @@ const EditUser = ({ match }) => {
   return (
     <>
       <Container>
-        <h1>Edit Users</h1>
+        <Row className="my-2">
+          <Col md="1" className="d-flex align-items-center">
+            <Link to="/users">
+              <BsBoxArrowInLeft className="text-secondary" size="30" />
+            </Link>
+          </Col>
+          <h1>Edit Users</h1>
+        </Row>
         <Form>
           <FormGroup>
             <Label htmlFor="name">Name</Label>
