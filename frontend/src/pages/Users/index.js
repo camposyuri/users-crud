@@ -45,7 +45,7 @@ const Users = () => {
     return (
       <Container>
         <h1 className="my-5">Listing of users</h1>
-        <Link className="btn btn-primary" to="/newUsers">
+        <Link className="btn btn-primary" to="/new-users">
           New User
         </Link>
         <Alert className="my-4" color="warning">
@@ -57,41 +57,45 @@ const Users = () => {
 
   return (
     <>
-      <h1 className="my-5">Listing of users</h1>
-
-      <TableList>
-        <TableHeader
-          id="ID"
-          name="Name"
-          usename="UserName"
-          email="E-mail"
-          number="Phone"
-          action="Actions"
-        />
-        {data.map((item) => {
-          return (
-            <TableBody
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              username={item.username}
-              email={item.email}
-              number={item.number}
-            >
-              <Link className="btn btn-warning" to={"/edit/" + item.id}>
-                Edit
-              </Link>
-              <Button
-                className="ml-2"
-                color="danger"
-                onClick={() => handleDelete(item.id)}
+      <Container>
+        <h1 className="mt-5">Listing of users</h1>
+        <Link className="btn btn-primary mb-3" to="/new-users">
+          New User
+        </Link>
+        <TableList>
+          <TableHeader
+            id="ID"
+            name="Name"
+            usename="UserName"
+            email="E-mail"
+            number="Phone"
+            action="Actions"
+          />
+          {data.map((item) => {
+            return (
+              <TableBody
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                username={item.username}
+                email={item.email}
+                number={item.number}
               >
-                Delete
-              </Button>
-            </TableBody>
-          );
-        })}
-      </TableList>
+                <Link className="btn btn-warning" to={"/edit/" + item.id}>
+                  Edit
+                </Link>
+                <Button
+                  className="ml-2"
+                  color="danger"
+                  onClick={() => handleDelete(item.id)}
+                >
+                  Delete
+                </Button>
+              </TableBody>
+            );
+          })}
+        </TableList>
+      </Container>
     </>
   );
 };
