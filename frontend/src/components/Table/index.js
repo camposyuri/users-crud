@@ -4,7 +4,7 @@ import { Table } from "reactstrap";
 const TableList = ({ children }) => {
   return (
     <div>
-      <Table hover size="md">
+      <Table responsive hover size="md">
         {children}
       </Table>
     </div>

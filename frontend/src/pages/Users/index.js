@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Alert, Button, Container, Row, Spinner } from "reactstrap";
+import { Alert, Button, Col, Container, Row, Spinner } from "reactstrap";
 import TableList from "../../components/Table";
 import TableBody from "../../components/Table/TableBody";
 import TableHeader from "../../components/Table/TableHeader";
@@ -81,16 +81,24 @@ const Users = () => {
                 email={item.email}
                 number={item.number}
               >
-                <Link className="btn btn-warning" to={"/edit/" + item.id}>
-                  Edit
-                </Link>
-                <Button
-                  className="ml-2"
-                  color="danger"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  Delete
-                </Button>
+                <Col md="10">
+                  <Row>
+                    <Col md="4">
+                      <Link className="btn btn-warning" to={"/edit/" + item.id}>
+                        Edit
+                      </Link>
+                    </Col>
+                    <Col md="4" sm="2">
+                      <Button
+                        className="ml-2"
+                        color="danger"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Col>
+                  </Row>
+                </Col>
               </TableBody>
             );
           })}
