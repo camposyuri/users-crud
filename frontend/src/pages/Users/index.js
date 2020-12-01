@@ -29,13 +29,12 @@ const Users = () => {
         >
           <Spinner color="dark" style={{ width: "3rem", height: "3rem" }} />
         </Row>
-        {console.log("AQUI")}
       </Container>
     );
   }
 
   const handleDelete = (id) => {
-    api.delete("/users/" + id).then((response) => {
+    api.delete("/users/" + id).then((_) => {
       const filters = data.filter((item) => item.id !== id);
       setData(filters);
     });
