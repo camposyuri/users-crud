@@ -99,6 +99,7 @@ const NewUsers = () => {
               onChange={handleValue("number")}
             />
           </FormGroup>
+
           <Button onClick={save}>Save</Button>
         </Form>
       </Container>
