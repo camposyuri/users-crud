@@ -22,6 +22,7 @@ const NewUsers = () => {
   });
 
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleValue = (field) => (event) => {
     setForm({
@@ -38,6 +39,19 @@ const NewUsers = () => {
       .then((_) => {
         setSuccess(true);
       });
+  };
+
+  const handleValidate = () => {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/g;
+
+    if (form.email.length === 0) {
+      setError("Preencha o campo");
+    } else if (!regex.test(form.email)) {
+      setError("Preencha um e-mail válido");
+      return false;
+    } else {
+      setError(null);
+    }
   };
 
   if (success) {
@@ -86,6 +100,7 @@ const NewUsers = () => {
               type="email"
               value={form.email}
               onChange={handleValue("email")}
+              onBlur={handleValidate}
             />
           </FormGroup>
 
@@ -99,9 +114,17 @@ const NewUsers = () => {
               onChange={handleValue("number")}
             />
           </FormGroup>
-
-          <Button onClick={save}>Save</Button>
+          {error ? (
+            <Button disabled onClick={save}>
+              Save
+            </Button>
+          ) : (
+            <Button color="primary" onClick={save}>
+              Save
+            </Button>
+          )}
         </Form>
+        <p>{error}</p>
       </Container>
     </>
   );
