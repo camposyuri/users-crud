@@ -13,6 +13,16 @@ import {
 } from "reactstrap";
 import api from "../../services/api";
 
+const types = {
+  email: {
+    regex: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/g,
+  },
+
+  number: {
+    regex: /^\d+$/,
+  },
+};
+
 const NewUsers = () => {
   const [form, setForm] = useState({
     name: "",
@@ -24,14 +34,31 @@ const NewUsers = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleValue = (field) => (event) => {
-    setForm({
-      ...form,
-      [field]: event.target.value,
-    });
+  const validate = () => {
+    if (!types.email.regex.test(form.email)) {
+      setError("Preencha um e-mail válido");
+      return false;
+    } else if (form.number.length === 0) {
+      setError("Preencha um número de telefone válido");
+      return false;
+    } else if (!types.number.regex.test(form.number)) {
+      setError("Digite apenas números no campo de telefone");
+      return false;
+    } else {
+      setError(null);
+      return true;
+    }
   };
 
   const save = () => {
+    // verifica se todos as propriedades do meu objeto são maiores que 0
+    for (let value in form) {
+      if (form[value].length === 0) {
+        setError("Preencha todos os campos acima para salvar!");
+        return false;
+      }
+    }
+
     api
       .post("/users", {
         ...form,
@@ -41,17 +68,22 @@ const NewUsers = () => {
       });
   };
 
-  const handleValidate = () => {
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/g;
+  const handlerBlur = ({ target }) => {
+    validate(target.value);
+  };
 
-    if (form.email.length === 0) {
-      setError("Preencha o campo");
-    } else if (!regex.test(form.email)) {
-      setError("Preencha um e-mail válido");
-      return false;
-    } else {
-      setError(null);
+  const handleValue = (field) => (event) => {
+    if (error) {
+      validate({
+        ...form,
+        [field]: event.target.value,
+      });
     }
+
+    setForm({
+      ...form,
+      [field]: event.target.value,
+    });
   };
 
   if (success) {
@@ -89,6 +121,7 @@ const NewUsers = () => {
               type="text"
               value={form.username}
               onChange={handleValue("username")}
+              onBlur={handlerBlur}
             />
           </FormGroup>
 
@@ -100,7 +133,7 @@ const NewUsers = () => {
               type="email"
               value={form.email}
               onChange={handleValue("email")}
-              onBlur={handleValidate}
+              onBlur={handlerBlur}
             />
           </FormGroup>
 
