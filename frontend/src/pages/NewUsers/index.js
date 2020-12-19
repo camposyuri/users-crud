@@ -34,8 +34,9 @@ const NewUsers = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
 
-  const validate = () => {
-    if (!types.email.regex.test(form.email)) {
+  const validate = (value) => {
+    console.log(value);
+    if (/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/g.test(value)) {
       setError("Preencha um e-mail válido");
       return false;
     } else if (form.number.length === 0) {
@@ -68,10 +69,6 @@ const NewUsers = () => {
       });
   };
 
-  const handlerBlur = ({ target }) => {
-    validate(target.value);
-  };
-
   const handleValue = (field) => (event) => {
     if (error) {
       validate({
@@ -89,6 +86,10 @@ const NewUsers = () => {
   if (success) {
     return <Redirect to="/users" />;
   }
+
+  const handlerBlur = () => {
+    handleValue("email");
+  };
 
   return (
     <>
@@ -121,7 +122,6 @@ const NewUsers = () => {
               type="text"
               value={form.username}
               onChange={handleValue("username")}
-              onBlur={handlerBlur}
             />
           </FormGroup>
 
@@ -133,7 +133,7 @@ const NewUsers = () => {
               type="email"
               value={form.email}
               onChange={handleValue("email")}
-              onBlur={handlerBlur}
+              onBlur={handlerBlur("email")}
             />
           </FormGroup>
 
